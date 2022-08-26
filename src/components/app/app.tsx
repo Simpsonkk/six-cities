@@ -2,30 +2,33 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import MainScreen from '../main-screen/main-screen';
 import SignIn from '../sign-in/sign-in';
-import FavoriteRooms from '../favorite-rooms/favorite-rooms';
-import RoomDescription from '../room-description/room-description';
 import NotFoundScreen from './../not-found-screen/not-found-screen';
 import PrivatRoute from './../private-route/private-route';
+import {RoomsDescription} from '../../types/room-card.model';
+import RoomDetails from './../room-details/room-details';
+import { Reviews } from '../../types/reviews.model';
+import FavoriteScreen from '../favorite-screen/favorite-screen';
 
 type AppScreenProps = {
-  roomQuantity: number;
+  roomList: RoomsDescription,
+  reviews: Reviews
 };
 
-function App({ roomQuantity }: AppScreenProps): JSX.Element {
+function App({ roomList, reviews }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen roomQuantity={roomQuantity} />}
+          element={<MainScreen roomList={roomList}/>}
         />
         <Route path={AppRoute.SignIn} element={<SignIn />} />
-        <Route path={AppRoute.Room} element={<RoomDescription />} />
+        <Route path={AppRoute.Room} element={<RoomDetails roomList={roomList} reviews={reviews}/>} />
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivatRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <FavoriteRooms />
+            <PrivatRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <FavoriteScreen roomList={roomList} />
             </PrivatRoute>
           }
         />
