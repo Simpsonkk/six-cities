@@ -1,5 +1,6 @@
 import { RoomDescription } from '../../types/room-card.model';
 import { countPercentRating } from './../../util';
+import { Link } from 'react-router-dom';
 
 type RoomCardProps = {
   roomCard: RoomDescription,
@@ -7,7 +8,19 @@ type RoomCardProps = {
 };
 
 function RoomCard({ roomCard, activeCard }: RoomCardProps): JSX.Element {
+  // function getSelectedProductIds(): number[] {
+  //   const roomIds = localStorage.getItem('roomIds');
+  //   if (roomIds) {
+  //     return JSON.parse(roomIds);
+  //   }
+  //   return [];
+  // }
 
+  // function setSelectedRoomIds(roomId: number): void {
+  //   const roomIds = getSelectedProductIds();
+  //   roomIds.push(roomId);
+  //   localStorage.setItem('roomIds', JSON.stringify(roomIds));
+  // }
 
   return (
     <article onMouseOver={() => activeCard(roomCard.roomCardId)} className="cities__place-card place-card">
@@ -17,7 +30,7 @@ function RoomCard({ roomCard, activeCard }: RoomCardProps): JSX.Element {
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`/offer/${roomCard.roomCardId}`}>
           <img
             className="place-card__image"
             src={roomCard.img}
@@ -25,7 +38,7 @@ function RoomCard({ roomCard, activeCard }: RoomCardProps): JSX.Element {
             height="200"
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -34,6 +47,7 @@ function RoomCard({ roomCard, activeCard }: RoomCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
+            // onClick={() => setSelectedRoomIds(roomCard.roomCardId)}
             className={`place-card__bookmark-button ${
               roomCard.isFavorite ? 'place-card__bookmark-button--active' : ''
             }  button`}
@@ -52,7 +66,7 @@ function RoomCard({ roomCard, activeCard }: RoomCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp;{roomCard.description}</a>
+          <Link to={`/offer/${roomCard.roomCardId}`}>Beautiful &amp;{roomCard.description}</Link>
         </h2>
         <p className="place-card__type">{roomCard.type}</p>
       </div>

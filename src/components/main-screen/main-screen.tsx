@@ -7,6 +7,7 @@ type MainScreenProps = {
 };
 
 function MainScreen({ roomList }: MainScreenProps): JSX.Element {
+
   return (
     <div className="page page--gray page--main">
       <Header/>
@@ -82,7 +83,6 @@ function MainScreen({ roomList }: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {}
                 <RoomList roomList={roomList}/>
               </div>
             </section>

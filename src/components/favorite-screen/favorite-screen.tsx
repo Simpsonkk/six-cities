@@ -1,6 +1,8 @@
 import { RoomDescription, RoomsDescription } from '../../types/room-card.model';
 import Header from '../header/header';
 import FavoriteCities from './../favorite-cities/favorite-cities';
+import FavoriteRoomCard from './../favorite-room-card/favorite-room-card';
+import { Link } from 'react-router-dom';
 
 type FavoriteScreenProps = {
   roomList: RoomsDescription
@@ -20,7 +22,7 @@ function FavoriteScreen({ roomList }: FavoriteScreenProps): JSX.Element {
         <>
           {favoriteRooms.filter((favoriteRoom: RoomDescription) => (
             favoriteRoom.city === city)).map((favoriteRoom: RoomDescription) => (
-            <p key={favoriteRoom.roomCardId}>{favoriteRoom.description}</p>
+            <FavoriteRoomCard key={favoriteRoom.roomCardId} favoriteRoom={favoriteRoom}/>
           ))}
         </>
       </FavoriteCities>
@@ -41,7 +43,7 @@ function FavoriteScreen({ roomList }: FavoriteScreenProps): JSX.Element {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link className="footer__logo-link" to={'/'}>
           <img
             className="footer__logo"
             src="img/logo.svg"
@@ -49,7 +51,7 @@ function FavoriteScreen({ roomList }: FavoriteScreenProps): JSX.Element {
             width="64"
             height="33"
           />
-        </a>
+        </Link>
       </footer>
     </div>
   );

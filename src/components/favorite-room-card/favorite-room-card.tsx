@@ -1,23 +1,29 @@
+import { RoomDescription } from '../../types/room-card.model';
+import { countPercentRating } from './../../util';
+import { Link } from 'react-router-dom';
 
+type FavoriteRoomCardProps = {
+  favoriteRoom: RoomDescription
+}
 
-function FavoriteRoomCard(): JSX.Element {
+function FavoriteRoomCard({ favoriteRoom }: FavoriteRoomCardProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`/offer/${favoriteRoom.roomCardId}`}>
           <img
             className="place-card__image"
-            src="img/apartment-small-03.jpg"
+            src={favoriteRoom.img}
             width="150"
             height="110"
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;180</b>
+            <b className="place-card__price-value">&euro;{favoriteRoom.price}</b>
             <span className="place-card__price-text">
                 &#47;&nbsp;night
             </span>
@@ -38,14 +44,14 @@ function FavoriteRoomCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '100%' }}></span>
+            <span style={{ width: `${countPercentRating(favoriteRoom.raiting)}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Nice, cozy, warm big bed apartment</a>
+          <Link to={`/offer/${favoriteRoom.roomCardId}`}>{favoriteRoom.description}</Link>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{favoriteRoom.type}</p>
       </div>
     </article>
   );
