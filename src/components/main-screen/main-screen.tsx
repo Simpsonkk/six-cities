@@ -1,12 +1,35 @@
 import RoomList from './../room-list/room-list';
 import { RoomsDescription } from '../../types/room-card.model';
 import Header from '../header/header';
+import { useState } from 'react';
+import browserHistory from '../../browser-history';
+import Map from '../map/map';
+
+// import { myContext } from './../context/context';
 
 type MainScreenProps = {
-  roomList: RoomsDescription
+  roomList: RoomsDescription,
 };
 
 function MainScreen({ roomList }: MainScreenProps): JSX.Element {
+  const [selectedRoom, setSelectedRoom] = useState(0);
+  const [currentCity] = useState(roomList[0].city);
+  const points = roomList.map((room) => ({
+    latitude: room.location.latitude,
+    longitude: room.location.longitude,
+    id: room.id,
+  }));
+
+  const handlePlaceHover = (id: number) => setSelectedRoom(id);
+
+  const handlePlaceLeave = () => setSelectedRoom(0);
+
+  //   const listItemHoverHandler = (event: MouseEvent<HTMLLIElement>) => {
+  //   event.preventDefault();
+  //   onListItemHover(event.currentTarget.key);
+  // }
+
+  // const handleActiveOfferChoose = (id: number | null) => setSelectedRoom(id);
 
   return (
     <div className="page page--gray page--main">
@@ -83,11 +106,16 @@ function MainScreen({ roomList }: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <RoomList roomList={roomList}/>
+                <RoomList roomList={roomList} onPlaceHover={handlePlaceHover} onPlaceLeave={handlePlaceLeave}/>
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map containerClassName='cities__map'
+                points={points}
+                activePointId={selectedRoom}
+                center={currentCity.location}
+                onMarkerClick={(roomId) => browserHistory.push(`/offer/${roomId}`)}
+              />
             </div>
           </div>
         </div>

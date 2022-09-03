@@ -9,13 +9,13 @@ type ReviewsProps = {
 }
 
 function Review({ room, reviews}: ReviewsProps): JSX.Element {
-  const review = reviews.find((currentReview) => currentReview.cardId === (room && room.roomCardId));
+  const review = reviews.find((currentReview) => currentReview.cardId === (room && room.id));
 
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
       <ul className="reviews__list">
-        {(review && review.cardId) === (room && room.roomCardId) ? (
+        {(review && review.cardId) === (room && room.id) ? (
           <li className="reviews__item">
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">

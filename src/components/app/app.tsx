@@ -14,13 +14,22 @@ type AppScreenProps = {
   reviews: Reviews
 };
 
+
 function App({ roomList, reviews }: AppScreenProps): JSX.Element {
+
+
+  // const onListItemHover = (listItemName: number) => {
+  //   const currentPoint = roomList.find((room) => room.roomCardId === listItemName);
+
+  //   setSelectedRoom(currentPoint);
+  // };
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainScreen roomList={roomList}/>}
+          element={<MainScreen roomList={roomList} />}
         />
         <Route path={AppRoute.SignIn} element={<SignIn />} />
         <Route path={AppRoute.Room} element={<RoomDetails roomList={roomList} reviews={reviews}/>} />

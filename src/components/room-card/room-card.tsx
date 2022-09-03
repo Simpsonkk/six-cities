@@ -1,13 +1,16 @@
 import { RoomDescription } from '../../types/room-card.model';
 import { countPercentRating } from './../../util';
 import { Link } from 'react-router-dom';
+// import { MouseEvent } from 'react';
+
 
 type RoomCardProps = {
   roomCard: RoomDescription,
-  activeCard: (id: number) => void;
+  onPlaceHover?: (id: number) => void,
+  onPlaceLeave?: () => void,
 };
 
-function RoomCard({ roomCard, activeCard }: RoomCardProps): JSX.Element {
+function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.Element {
   // function getSelectedProductIds(): number[] {
   //   const roomIds = localStorage.getItem('roomIds');
   //   if (roomIds) {
@@ -23,17 +26,20 @@ function RoomCard({ roomCard, activeCard }: RoomCardProps): JSX.Element {
   // }
 
   return (
-    <article onMouseOver={() => activeCard(roomCard.roomCardId)} className="cities__place-card place-card">
+    <article
+      onMouseEnter={onPlaceHover ? () => onPlaceHover(roomCard.id) : undefined}
+      onMouseLeave={onPlaceLeave ? () => onPlaceLeave() : undefined} className="cities__place-card place-card"
+    >
       {roomCard.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${roomCard.roomCardId}`}>
+        <Link to={`/offer/${roomCard.id}`}>
           <img
             className="place-card__image"
-            src={roomCard.img}
+            src={roomCard.images[0]}
             width="260"
             height="200"
             alt="Place image"
@@ -61,12 +67,12 @@ function RoomCard({ roomCard, activeCard }: RoomCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${countPercentRating(roomCard.raiting)}%` }}></span>
+            <span style={{ width: `${countPercentRating(roomCard.rating)}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${roomCard.roomCardId}`}>Beautiful &amp;{roomCard.description}</Link>
+          <Link to={`/offer/${roomCard.id}`}>{roomCard.title}</Link>
         </h2>
         <p className="place-card__type">{roomCard.type}</p>
       </div>

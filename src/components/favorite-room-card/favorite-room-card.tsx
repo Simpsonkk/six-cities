@@ -10,10 +10,10 @@ function FavoriteRoomCard({ favoriteRoom }: FavoriteRoomCardProps): JSX.Element 
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${favoriteRoom.roomCardId}`}>
+        <Link to={`/offer/${favoriteRoom.id}`}>
           <img
             className="place-card__image"
-            src={favoriteRoom.img}
+            src={favoriteRoom.previewImage}
             width="150"
             height="110"
             alt="Place image"
@@ -44,12 +44,12 @@ function FavoriteRoomCard({ favoriteRoom }: FavoriteRoomCardProps): JSX.Element 
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${countPercentRating(favoriteRoom.raiting)}%` }}></span>
+            <span style={{ width: `${countPercentRating(favoriteRoom.rating)}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${favoriteRoom.roomCardId}`}>{favoriteRoom.description}</Link>
+          <Link to={`/offer/${favoriteRoom.id}`}>{favoriteRoom.title}</Link>
         </h2>
         <p className="place-card__type">{favoriteRoom.type}</p>
       </div>

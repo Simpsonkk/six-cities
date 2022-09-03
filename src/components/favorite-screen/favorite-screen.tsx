@@ -13,7 +13,7 @@ function FavoriteScreen({ roomList }: FavoriteScreenProps): JSX.Element {
     room.isFavorite
   );
   const uniqueCities = Array.from(
-    new Set(favoriteRooms.map((room: RoomDescription) => room.city))
+    new Set(favoriteRooms.map((room: RoomDescription) => room.city.name))
   );
 
   function getFavoriteRooms(): any { // исправить тип функции, когда доделаешь тело ф
@@ -21,8 +21,8 @@ function FavoriteScreen({ roomList }: FavoriteScreenProps): JSX.Element {
       <FavoriteCities key={city} city={city}>
         <>
           {favoriteRooms.filter((favoriteRoom: RoomDescription) => (
-            favoriteRoom.city === city)).map((favoriteRoom: RoomDescription) => (
-            <FavoriteRoomCard key={favoriteRoom.roomCardId} favoriteRoom={favoriteRoom}/>
+            favoriteRoom.city.name === city)).map((favoriteRoom: RoomDescription) => (
+            <FavoriteRoomCard key={favoriteRoom.id} favoriteRoom={favoriteRoom}/>
           ))}
         </>
       </FavoriteCities>

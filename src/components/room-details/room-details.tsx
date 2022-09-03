@@ -12,7 +12,7 @@ type RoomDetailsProps = {
 
 function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
   const params = useParams();
-  const room = roomList.find((currentRoom: RoomDescription) => currentRoom.roomCardId.toString() === params.id);
+  const room = roomList.find((currentRoom: RoomDescription) => currentRoom.id.toString() === params.id);
 
   return (
     <div className="page">
@@ -22,7 +22,7 @@ function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               <div className="property__image-wrapper">
-                <img className="property__image" src={room && room.img} alt="Photo studio"/>
+                <img className="property__image" src={room?.images[0]} alt="Photo studio"/>
               </div>
             </div>
           </div>
@@ -35,7 +35,7 @@ function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
               )}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {room && room.description}
+                  {room && room.title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -46,10 +46,10 @@ function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${countPercentRating(room && room.raiting)}%`}}></span>
+                  <span style={{width: `${countPercentRating(room && room.rating)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{room && room.raiting}</span>
+                <span className="property__rating-value rating__value">{room && room.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
@@ -69,7 +69,7 @@ function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {room && room.services.map((service) => (
+                  {room && room.goods.map((service) => (
                     <li className="property__inside-item" key={service}>
                       {service}
                     </li>
@@ -80,7 +80,7 @@ function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={room && room.host.avatar} width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={room && room.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
                     {room && room.host.name}
@@ -89,7 +89,7 @@ function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {room && room.host.comment}
+                    {room && room.description}
                   </p>
                 </div>
               </div>
