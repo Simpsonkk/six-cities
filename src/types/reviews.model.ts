@@ -12,7 +12,7 @@ export type Review = {
 
 export type Reviews = Review[]
 
-export type City = {
-  lat: number,
-  long: number
-};
+// export type City = {
+//   lat: number,
+//   long: number
+// };

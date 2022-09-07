@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 
 type RoomCardProps = {
   roomCard: RoomDescription,
-  onPlaceHover?: (id: number) => void,
-  onPlaceLeave?: () => void,
+  onPlaceHover: (id: number) => void,
+  onPlaceLeave: () => void,
 };
 
 function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.Element {
@@ -27,8 +27,8 @@ function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.
 
   return (
     <article
-      onMouseEnter={onPlaceHover ? () => onPlaceHover(roomCard.id) : undefined}
-      onMouseLeave={onPlaceLeave ? () => onPlaceLeave() : undefined} className="cities__place-card place-card"
+      onMouseEnter={() => onPlaceHover(roomCard.id)}
+      onMouseLeave={() => onPlaceLeave()} className="cities__place-card place-card"
     >
       {roomCard.isPremium && (
         <div className="place-card__mark">
