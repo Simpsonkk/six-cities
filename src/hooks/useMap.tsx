@@ -5,7 +5,7 @@ import { Location } from '../types/room-card.model';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  center: Location,
+  selectedCity: Location,
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   useEffect(() => {
@@ -17,27 +17,27 @@ function useMap(
       },
     );
 
-    map?.flyTo([center.latitude, center.longitude]);
+    map?.flyTo([selectedCity.latitude, selectedCity.longitude]);
 
     if (mapRef.current !== null && map === null) {
 
       const instance = leaflet.map(mapRef.current, {
         center: {
-          lat: center.latitude,
-          lng: center.longitude,
+          lat: selectedCity.latitude,
+          lng: selectedCity.longitude,
         },
-        zoom: center.zoom,
+        zoom: selectedCity.zoom,
       });
       instance.addLayer(layer);
 
       setMap(instance);
-      return () => {
-        setMap(null);
-        instance.off();
-        instance.remove();
-      };
+      // return () => {
+      //   setMap(null);
+      //   instance.off();
+      //   instance.remove();
+      // };
     }
-  }, [mapRef, center]);
+  }, [mapRef, selectedCity]);
 
   return map;
 }

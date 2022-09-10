@@ -1,19 +1,29 @@
 import RoomList from './../room-list/room-list';
-import { RoomsDescription } from '../../types/room-card.model';
 import Header from '../header/header';
 import { useState } from 'react';
 import browserHistory from '../../browser-history';
 import Map from '../map/map';
 import CitiesList from './../cities-list/cities-list';
+import { useAppSelector } from '../../hooks/dispatch-selector';
+import SortingRoomList from './../sorting-room-list/sorting-room-list';
+import { filterRoomList } from '../../util';
+import { Point } from '../../types/room-card.model';
 
-type MainScreenProps = {
-  roomList: RoomsDescription,
-};
-
-function MainScreen({ roomList }: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
   const [selectedRoom, setSelectedRoom] = useState(0);
-  const [currentCity] = useState(roomList[0].city);
-  const points = roomList.map((room) => ({
+
+  const {currrentCity, currentRoomList} = useAppSelector((state) => state.cities);
+
+  const filteredRoomList = filterRoomList(currrentCity, currentRoomList);
+
+  const selectedCityLocation = filteredRoomList[0].city.location;
+
+  const [currentSortingOption, setCurrentSortingOption] = useState('Popular');
+
+  const handleSortingOptionChoose = (option: string) =>
+    setCurrentSortingOption(option);
+
+  const points = filteredRoomList.map((room: Point) => ({
     latitude: room.location.latitude,
     longitude: room.location.longitude,
     id: room.id,
@@ -23,65 +33,42 @@ function MainScreen({ roomList }: MainScreenProps): JSX.Element {
 
   const handlePlaceLeave = () => setSelectedRoom(0);
 
-
-  //   const listItemHoverHandler = (event: MouseEvent<HTMLLIElement>) => {
-  //   event.preventDefault();
-  //   onListItemHover(event.currentTarget.key);
-  // }
-
-  // const handleActiveOfferChoose = (id: number | null) => setSelectedRoom(id);
-
   return (
     <div className="page page--gray page--main">
-      <Header/>
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <CitiesList/>
+          <CitiesList />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                5 places to stay in Amsterdam
+                {filteredRoomList.length} places to stay in {currrentCity}
               </b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li
-                    className="places__option places__option--active"
-                    tabIndex={0}
-                  >
-                    Popular
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: low to high
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: high to low
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Top rated first
-                  </li>
-                </ul>
-              </form>
+              <SortingRoomList
+                currentSortingOption={currentSortingOption}
+                onOptionChange={handleSortingOptionChoose}
+              />
               <div className="cities__places-list places__list tabs__content">
-                <RoomList roomList={roomList} onPlaceHover={handlePlaceHover} onPlaceLeave={handlePlaceLeave}/>
+                <RoomList
+                  filteredRoomList={filteredRoomList}
+                  onPlaceHover={handlePlaceHover}
+                  onPlaceLeave={handlePlaceLeave}
+                  currentSortingOption={currentSortingOption}
+                />
               </div>
             </section>
             <div className="cities__right-section">
-              <Map containerClassName='cities__map'
-                points={points}
+              <Map
+                containerClassName="cities__map"
                 activePointId={selectedRoom}
-                center={currentCity.location}
-                onMarkerClick={(roomId) => browserHistory.push(`/offer/${roomId}`)}
+                selectedCity={selectedCityLocation}
+                points={points}
+                onMarkerClick={(roomId) =>
+                  browserHistory.push(`/offer/${roomId}`)}
               />
             </div>
           </div>

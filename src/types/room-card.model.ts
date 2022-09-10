@@ -1,34 +1,9 @@
-// export type RoomDescription = {
-//   roomCardId: number,
-//   city: string,
-//   location: Location,
-//   isPremium: boolean,
-//   img: string,
-//   price: number,
-//   isFavorite: boolean,
-//   raiting: number,
-//   description: string,
-//   type: string,
-//   bedrooms: number,
-//   maxAdults: number,
-//   services: string[],
-//   host: HostComment
-// };
-
-// type Location = {
-//   lat: number,
-//   lng: number
-// }
-
-// export type HostComment = {
-//   avatar: string,
-//   name: string,
-//   isPro: boolean,
-//   comment: string
-// }
-
-// export type RoomsDescription = RoomDescription[]
-
+export type Point = {
+  location: Location;
+  latitude: number,
+  longitude: number,
+  id: number
+}
 
 export type Location = {
   latitude: number;

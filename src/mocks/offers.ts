@@ -57,7 +57,7 @@ export const rooms: RoomsDescription = [
       longitude: 4.85309666406198,
       zoom: 16,
     },
-    id: 3,
+    id: 1,
   },
   {
     city: {
@@ -113,7 +113,7 @@ export const rooms: RoomsDescription = [
       longitude: 4.85309666406198,
       zoom: 16,
     },
-    id: 5,
+    id: 2,
   },
   {
     city: {
@@ -163,7 +163,7 @@ export const rooms: RoomsDescription = [
       longitude: 4.929309666406198,
       zoom: 16,
     },
-    id: 6,
+    id: 3,
   },
   {
     city: {
@@ -224,7 +224,7 @@ export const rooms: RoomsDescription = [
       longitude: 4.939309666406198,
       zoom: 16,
     },
-    id: 1,
+    id: 4,
   },
   {
     city: {
@@ -282,7 +282,7 @@ export const rooms: RoomsDescription = [
       longitude: 2.333499,
       zoom: 16,
     },
-    id: 3,
+    id: 5,
   },
   {
     city: {
@@ -290,7 +290,7 @@ export const rooms: RoomsDescription = [
       location: {
         'latitude': 48.85661,
         'longitude': 2.351499,
-        'zoom': 10,
+        'zoom': 12,
       },
     },
     previewImage: 'https://9.react.pages.academy/static/hotel/9.jpg',
@@ -338,7 +338,7 @@ export const rooms: RoomsDescription = [
       longitude: 2.3454990000000002,
       zoom: 16,
     },
-    id: 5,
+    id: 6,
   },
   {
     city: {
@@ -388,7 +388,7 @@ export const rooms: RoomsDescription = [
       longitude: 2.353499,
       zoom: 16,
     },
-    id: 6,
+    id: 7,
   },
   {
     city: {
@@ -449,7 +449,7 @@ export const rooms: RoomsDescription = [
       longitude: 2.342499,
       zoom: 16,
     },
-    id: 1,
+    id: 8,
   },
   {
     city: {
@@ -510,7 +510,7 @@ export const rooms: RoomsDescription = [
       longitude: 2.342499,
       zoom: 16,
     },
-    id: 1,
+    id: 9,
   },
   {
     city: {
@@ -571,7 +571,7 @@ export const rooms: RoomsDescription = [
       longitude: 2.342499,
       zoom: 16,
     },
-    id: 1,
+    id: 10,
   },
   {
     city: {
@@ -632,7 +632,7 @@ export const rooms: RoomsDescription = [
       longitude: 2.342499,
       zoom: 16,
     },
-    id: 1,
+    id: 11,
   },
 ];
 

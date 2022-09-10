@@ -11,9 +11,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App roomList={rooms} reviews={reviews} />
-    </Provider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
+    <App roomList={rooms} reviews={reviews} />
+  </Provider>
+  // </React.StrictMode>
 );

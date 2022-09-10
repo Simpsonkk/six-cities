@@ -28,7 +28,8 @@ function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.
   return (
     <article
       onMouseEnter={() => onPlaceHover(roomCard.id)}
-      onMouseLeave={() => onPlaceLeave()} className="cities__place-card place-card"
+      onMouseLeave={() => onPlaceLeave()}
+      className="cities__place-card place-card"
     >
       {roomCard.isPremium && (
         <div className="place-card__mark">

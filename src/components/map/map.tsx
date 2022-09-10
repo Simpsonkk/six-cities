@@ -3,20 +3,14 @@ import leaflet, { LayerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
 import classNames from 'classnames';
-import { Location } from '../../types/room-card.model';
+import { Location, Point } from '../../types/room-card.model';
 import { UrlMarker } from '../../const';
-
-type Point = {
-  latitude: number,
-  longitude: number,
-  id: number
-}
 
 type MapProps = {
   containerClassName: 'cities__map' | 'property__map',
   points: Point[],
   activePointId: number,
-  center: Location,
+  selectedCity: Location,
   onMarkerClick: (id: number) => void
 };
 
@@ -34,9 +28,22 @@ const currentCustomIcon = leaflet.icon({
 
 const markersGroup: LayerGroup = leaflet.layerGroup([]);
 
-function Map({ containerClassName, points, activePointId, center, onMarkerClick }: MapProps): JSX.Element {
+function Map({ containerClassName, selectedCity, activePointId, points, onMarkerClick }: MapProps): JSX.Element {
+
+  // const roomList = useAppSelector((state) => state.cities.rooms);
+
+  // // const selectedCity = roomList[0].city.location;
+  // // console.log(selectedCity);
+
+  // const points = roomList.map((room) => ({
+  //   latitude: room.location.latitude,
+  //   longitude: room.location.longitude,
+  //   id: room.id,
+  // }));
+  // console.log(points);
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, center);
+  const map = useMap(mapRef, selectedCity);
   const mapClassName = classNames({
     [containerClassName]: true,
     'map': true,
@@ -61,6 +68,9 @@ function Map({ containerClassName, points, activePointId, center, onMarkerClick 
       markersGroup.addTo(map);
 
     }
+    // return () => {
+    //   markersGroup.remove();
+    // };
   }, [map, points, activePointId, onMarkerClick]);
 
   return <section className={mapClassName} style={{height: '100%'}} ref={mapRef}></section>;

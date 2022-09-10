@@ -1,26 +1,23 @@
 // import { MouseEvent } from 'react';
-import { useAppSelector } from '../../hooks/dispatch-selector';
-import { RoomsDescription } from '../../types/room-card.model';
-import { selectListRoom } from '../../util';
+// import { useAppSelector } from '../../hooks/dispatch-selector';
+import { RoomDescription, RoomsDescription } from '../../types/room-card.model';
 import RoomCard from '../room-card/room-card';
+import { selectSortingOption } from './../../util';
 
 type RoomListProps = {
-  roomList: RoomsDescription
+  filteredRoomList: RoomsDescription
   onPlaceHover: (id: number) => void,
   onPlaceLeave: () => void,
+  currentSortingOption?: string
 }
 
-function RoomList({ roomList, onPlaceHover, onPlaceLeave }: RoomListProps): JSX.Element {
+function RoomList({ filteredRoomList, onPlaceHover, onPlaceLeave, currentSortingOption }: RoomListProps): JSX.Element {
 
-  const currentCity = useAppSelector((state) => state.cities.city);
-  console.log(currentCity);
-
-  const selectedListRoom = selectListRoom(currentCity);
-  console.log(selectedListRoom);
+  const sortedRoomList = selectSortingOption(currentSortingOption, filteredRoomList);
 
   return (
     <>
-      {selectedListRoom.map((roomCard) => (
+      {sortedRoomList.map((roomCard: RoomDescription) => (
         <RoomCard key={roomCard.id} roomCard={roomCard} onPlaceHover={onPlaceHover} onPlaceLeave={onPlaceLeave}/>
       ))}
     </>
