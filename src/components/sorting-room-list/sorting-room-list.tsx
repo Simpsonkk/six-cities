@@ -1,11 +1,5 @@
 import { SORTING_OPTIONS } from './../../const';
 import { useState } from 'react';
-// import { useAppSelector } from '../../hooks/dispatch-selector';
-// import { RoomsDescription } from '../../types/room-card.model';
-// import { useAppDispatch } from './../../hooks/dispatch-selector';
-// import { fillListRooms } from '../../store/citiesSlice';
-// import { fillListRooms } from '../../store/citiesSlice';
-// import { RoomDescription, RoomsDescription } from '../../types/room-card.model';
 
 type SortingRoomListProps = {
   currentSortingOption: string,
@@ -15,9 +9,6 @@ type SortingRoomListProps = {
 function SortingRoomList({currentSortingOption, onOptionChange}: SortingRoomListProps): JSX.Element {
 
   const [sortOptionState, setSortOptionState] = useState(false);
-
-  // const roomList = useAppSelector((state) => state.cities.rooms);
-  // const dispatch = useAppDispatch();
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -48,7 +39,6 @@ function SortingRoomList({currentSortingOption, onOptionChange}: SortingRoomList
             onClick={() => {
               onOptionChange(sortOption);
               setSortOptionState(!sortOptionState);
-              onOptionChange(sortOption);
             }}
             tabIndex={0}
           >

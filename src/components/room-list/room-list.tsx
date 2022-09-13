@@ -1,5 +1,3 @@
-// import { MouseEvent } from 'react';
-// import { useAppSelector } from '../../hooks/dispatch-selector';
 import { RoomDescription, RoomsDescription } from '../../types/room-card.model';
 import RoomCard from '../room-card/room-card';
 import { selectSortingOption } from './../../util';

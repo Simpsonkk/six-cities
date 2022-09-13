@@ -1,16 +1,17 @@
 import { useParams } from 'react-router-dom';
-import { RoomDescription, RoomsDescription } from '../../types/room-card.model';
+import { RoomDescription } from '../../types/room-card.model';
 import Header from '../header/header';
 import { countPercentRating } from '../../util';
 import { Reviews } from '../../types/reviews.model';
 import Review from './../review/review';
+import { useAppSelector } from '../../hooks/dispatch-selector';
 
 type RoomDetailsProps = {
-  roomList: RoomsDescription,
   reviews: Reviews
 }
 
-function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
+function RoomDetails({ reviews } :RoomDetailsProps): JSX.Element {
+  const roomList = useAppSelector((state) => state.cities.roomList);
   const params = useParams();
   const room = roomList.find((currentRoom: RoomDescription) => currentRoom.id.toString() === params.id);
 
@@ -21,21 +22,25 @@ function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src={room?.images[0]} alt="Photo studio"/>
-              </div>
+              {/* fix */}
+              {room?.images.map((image) => (
+                <div key={image} className="property__image-wrapper">
+                  <img className="property__image" src={image} alt="Photo studio"/>
+                </div>
+              ))}
+              {/* fix */}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {room && room.isPremium && (
+              {room?.isPremium && (
                 <div className="property__mark">
                   <span>Premium</span>
                 </div>
               )}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {room && room.title}
+                  {room?.title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -46,30 +51,30 @@ function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${countPercentRating(room && room.rating)}%`}}></span>
+                  <span style={{width: `${countPercentRating(room?.rating)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{room && room.rating}</span>
+                <span className="property__rating-value rating__value">{room?.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {room && room.type}
+                  {room?.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {room && room.bedrooms} Bedrooms
+                  {room?.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {room && room.maxAdults} adults
+                  Max {room?.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{room && room.price}</b>
+                <b className="property__price-value">&euro;{room?.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {room && room.goods.map((service) => (
+                  {room?.goods.map((service) => (
                     <li className="property__inside-item" key={service}>
                       {service}
                     </li>
@@ -80,16 +85,16 @@ function RoomDetails({ roomList, reviews } :RoomDetailsProps): JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={room && room.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
+                    <img className="property__avatar user__avatar" src={room?.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
-                    {room && room.host.name}
+                    {room?.host.name}
                   </span>
-                  {room && room.host.isPro && (<span className="property__user-status">Pro</span>)}
+                  {room?.host.isPro && (<span className="property__user-status">Pro</span>)}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {room && room.description}
+                    {room?.description}
                   </p>
                 </div>
               </div>

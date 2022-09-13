@@ -5,9 +5,15 @@ export enum AppRoute {
   Room = '/offer/:id'
 }
 
+export enum APIRoute {
+  ListRooms = '/hotels',
+  Favorite = '/favorite',
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
-  NoAuth = 'NO_AUTH'
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN'
 }
 
 export enum UrlMarker {

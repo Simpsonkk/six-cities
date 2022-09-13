@@ -12,9 +12,9 @@ import { Point } from '../../types/room-card.model';
 function MainScreen(): JSX.Element {
   const [selectedRoom, setSelectedRoom] = useState(0);
 
-  const {currrentCity, currentRoomList} = useAppSelector((state) => state.cities);
+  const { currrentCity, roomList } = useAppSelector((state) => state.cities);
 
-  const filteredRoomList = filterRoomList(currrentCity, currentRoomList);
+  const filteredRoomList = filterRoomList(currrentCity, roomList);
 
   const selectedCityLocation = filteredRoomList[0].city.location;
 

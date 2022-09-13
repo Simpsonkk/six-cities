@@ -1,7 +1,6 @@
 import { CITIES } from '../../const';
 import { useAppSelector } from '../../hooks/dispatch-selector';
 import { changeCity } from '../../store/citiesSlice';
-// import { selectListRoom } from '../../util';
 import { useAppDispatch } from './../../hooks/dispatch-selector';
 
 function CitiesList(): JSX.Element {
@@ -16,7 +15,6 @@ function CitiesList(): JSX.Element {
           <li key={city} className="locations__item">
             <a onClick={() => {
               dispatch(changeCity(city));
-              // dispatch(fillListRooms(selectListRoom(city)));
             }} className={
               `locations__item-link tabs__item ${currentCity === city ? 'tabs__item--active' : ''}`
             } href="#"

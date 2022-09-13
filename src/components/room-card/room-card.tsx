@@ -54,7 +54,6 @@ function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            // onClick={() => setSelectedRoomIds(roomCard.roomCardId)}
             className={`place-card__bookmark-button ${
               roomCard.isFavorite ? 'place-card__bookmark-button--active' : ''
             }  button`}
