@@ -9,7 +9,9 @@ export enum APIRoute {
   ListRooms = '/hotels',
   Favorite = '/favorite',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  NearbyRooms = '/nearby',
+  Reviews = '/comments'
 }
 
 export enum AuthorizationStatus {
