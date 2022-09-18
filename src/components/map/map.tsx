@@ -68,9 +68,9 @@ function Map({ containerClassName, selectedCity, activePointId, points, onMarker
       markersGroup.addTo(map);
 
     }
-    // return () => {
-    //   markersGroup.remove();
-    // };
+    return () => {
+      markersGroup.remove();
+    };
   }, [map, points, activePointId, onMarkerClick]);
 
   return <section className={mapClassName} style={{height: '100%'}} ref={mapRef}></section>;

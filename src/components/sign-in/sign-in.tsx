@@ -1,11 +1,29 @@
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useAppDispatch } from '../../hooks/dispatch-selector';
+import { loginAction } from '../../store/citiesSlice';
+
 function SignIn(): JSX.Element {
+  const [userAccountData, setUserAccountData] = useState({
+    login: '',
+    password: ''
+  });
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(loginAction(userAccountData));
+  };
+
+  const dispatch = useAppDispatch();
+
   return (
     <div className="page page--gray page--login">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link className="header__logo-link" to={AppRoute.Main}>
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -13,7 +31,7 @@ function SignIn(): JSX.Element {
                   width="81"
                   height="41"
                 />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -23,13 +41,23 @@ function SignIn(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form
+              onSubmit={handleSubmit}
+              className="login__form form" action="#" method="post"
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
+                  onChange={({target}: ChangeEvent<HTMLInputElement>) => {
+                    setUserAccountData({
+                      ...userAccountData,
+                      login: target.value
+                    });
+                  }}
                   className="login__input form__input"
                   type="email"
                   name="email"
+                  value={userAccountData.login}
                   placeholder="Email"
                   required
                 />
@@ -37,9 +65,15 @@ function SignIn(): JSX.Element {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
-                  className="login__input form__input"
+                  onChange={({target}: ChangeEvent<HTMLInputElement>) => {
+                    setUserAccountData({
+                      ...userAccountData,
+                      password: target.value
+                    });
+                  }} className="login__input form__input"
                   type="password"
                   name="password"
+                  value={userAccountData.password}
                   placeholder="Password"
                   required
                 />

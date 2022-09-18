@@ -11,7 +11,7 @@ type RoomDetailsProps = {
 }
 
 function RoomDetails({ reviews } :RoomDetailsProps): JSX.Element {
-  const roomList = useAppSelector((state) => state.cities.roomList);
+  const roomList = useAppSelector((state) => state.roomList);
   const params = useParams();
   const room = roomList.find((currentRoom: RoomDescription) => currentRoom.id.toString() === params.id);
 
@@ -22,13 +22,11 @@ function RoomDetails({ reviews } :RoomDetailsProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {/* fix */}
               {room?.images.map((image) => (
                 <div key={image} className="property__image-wrapper">
                   <img className="property__image" src={image} alt="Photo studio"/>
                 </div>
               ))}
-              {/* fix */}
             </div>
           </div>
           <div className="property__container container">

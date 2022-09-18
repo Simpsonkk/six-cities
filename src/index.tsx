@@ -3,6 +3,7 @@ import { store } from './store/store';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { reviews } from './mocks/reviews';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

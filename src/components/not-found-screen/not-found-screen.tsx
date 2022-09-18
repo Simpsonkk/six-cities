@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import { AppRoute } from '../../const';
 import Header from './../header/header';
 
 function NotFoundScreen(): JSX.Element {
@@ -7,7 +8,7 @@ function NotFoundScreen(): JSX.Element {
       <Header/>
       <div className="container">
         <h1>404. Page not found</h1>
-        <Link to="/" className="button">Вернуться на главную</Link>
+        <Link to={AppRoute.Main} className="button">Back to main page</Link>
       </div>
     </div>
   );

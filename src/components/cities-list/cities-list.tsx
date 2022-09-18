@@ -5,7 +5,7 @@ import { useAppDispatch } from './../../hooks/dispatch-selector';
 
 function CitiesList(): JSX.Element {
 
-  const currentCity = useAppSelector((state) => state.cities.currrentCity);
+  const currentCity = useAppSelector((state) => state.currrentCity);
   const dispatch = useAppDispatch();
 
   return (

@@ -28,6 +28,7 @@ function useMap(
         },
         zoom: selectedCity.zoom,
       });
+
       instance.addLayer(layer);
 
       setMap(instance);
@@ -37,7 +38,7 @@ function useMap(
       //   instance.remove();
       // };
     }
-  }, [mapRef, selectedCity]);
+  }, [mapRef, selectedCity, map]);
 
   return map;
 }

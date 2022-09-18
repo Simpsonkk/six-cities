@@ -40,7 +40,7 @@ function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.
         <Link to={`/offer/${roomCard.id}`}>
           <img
             className="place-card__image"
-            src={roomCard.images[0]}
+            src={roomCard.previewImage}
             width="260"
             height="200"
             alt="Place image"

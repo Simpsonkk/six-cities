@@ -8,6 +8,8 @@ export enum AppRoute {
 export enum APIRoute {
   ListRooms = '/hotels',
   Favorite = '/favorite',
+  Login = '/login',
+  Logout = '/logout'
 }
 
 export enum AuthorizationStatus {
@@ -19,6 +21,12 @@ export enum AuthorizationStatus {
 export enum UrlMarker {
   Default = '/img/pin.svg',
   Current = '/img/pin-active.svg'
+}
+
+export enum HttpCode {
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
 }
 
 export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

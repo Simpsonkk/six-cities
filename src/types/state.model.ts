@@ -7,7 +7,9 @@ export type InitialState = {
   authorizationStatus: AuthorizationStatus,
   roomList: RoomDescription[],
   isDataLoaded: boolean,
-  favoriteRooms: RoomDescription[]
+  favoriteRooms: RoomDescription[],
+  // userEmail: string,
+  // userAvatarUrl: string
 }
 export type State = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
