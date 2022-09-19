@@ -8,11 +8,9 @@ import NearPlacesList from '../near-places-list/near-places-list';
 import Reviews from '../reviews/reviews';
 
 function RoomDetails(): JSX.Element {
-  // const roomList = useAppSelector((state)=> state.roomList);
-  // const room = roomList.find((currentRoom: RoomDescription) => currentRoom.id.toString() === params.id);
   const params = useParams();
   const dispatch = useAppDispatch();
-  const {currentRoom, nearbyRooms, reviews} = useAppSelector((state) => state);
+  const {currentRoom, nearbyRooms, reviews, authorizationStatus} = useAppSelector((state) => state);
 
   useEffect(() => {
     dispatch(setCurrentRoomAction(params.id));
@@ -107,7 +105,7 @@ function RoomDetails(): JSX.Element {
                   </p>
                 </div>
               </div>
-              <Reviews reviews={reviews} />
+              <Reviews reviews={reviews} authorizationStatus={authorizationStatus}/>
             </div>
           </div>
           <section className="property__map map"></section>

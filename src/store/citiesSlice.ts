@@ -93,6 +93,7 @@ export const setCurrentRoomAction = createAsyncThunk(
       const {data} = await api.get<RoomDescription>(`${APIRoute.ListRooms}/${roomId}`);
       store.dispatch(loadCurrentRoom(data));
     } catch (error) {
+      store.dispatch(redirectToRoute(AppRoute.NotFound));
       errorHandler(error);
     }
   }

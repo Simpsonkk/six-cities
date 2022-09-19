@@ -13,6 +13,7 @@ import { checkAuthStatusAction, setListRoomAction } from './../../store/citiesSl
 import Loader from './../loader/loader';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
+import { ToastContainer } from 'react-toastify';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -33,6 +34,7 @@ function App(): JSX.Element {
 
   return (
     <HistoryRouter history={browserHistory}>
+      <ToastContainer />
       <Routes>
         <Route path={AppRoute.Main} element={<MainScreen />} />
         <Route path={AppRoute.SignIn} element={<SignIn />} />
@@ -48,7 +50,7 @@ function App(): JSX.Element {
             </PrivatRoute>
           }
         />
-        <Route path="*" element={<NotFoundScreen />}></Route>
+        <Route path='*' element={<NotFoundScreen />}></Route>
       </Routes>
     </HistoryRouter>
   );
