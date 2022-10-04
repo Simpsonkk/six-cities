@@ -1,8 +1,11 @@
 import { RoomDescription } from '../../types/room-card.model';
 import { countPercentRating } from './../../util';
 import { Link } from 'react-router-dom';
-// import { MouseEvent } from 'react';
-
+import { useAppDispatch } from '../../hooks/useDispatch-useSelector';
+import { changeFavoriteRoomAction } from '../../store/citiesSlice';
+import { FavoriteRoom } from '../../types/favorite-status.model';
+import { APIRoute } from '../../const';
+import { memo } from 'react';
 
 type RoomCardProps = {
   roomCard: RoomDescription,
@@ -11,19 +14,14 @@ type RoomCardProps = {
 };
 
 function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.Element {
-  // function getSelectedProductIds(): number[] {
-  //   const roomIds = localStorage.getItem('roomIds');
-  //   if (roomIds) {
-  //     return JSON.parse(roomIds);
-  //   }
-  //   return [];
-  // }
+  const dispatch = useAppDispatch();
 
-  // function setSelectedRoomIds(roomId: number): void {
-  //   const roomIds = getSelectedProductIds();
-  //   roomIds.push(roomId);
-  //   localStorage.setItem('roomIds', JSON.stringify(roomIds));
-  // }
+  const changeFavoriteStatus = ({roomId, newFavoriteStatus}: FavoriteRoom) => {
+    dispatch(changeFavoriteRoomAction({
+      roomId,
+      newFavoriteStatus
+    }));
+  };
 
   return (
     <article
@@ -37,7 +35,7 @@ function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${roomCard.id}`}>
+        <Link to={`${APIRoute.Offer}/${roomCard.id}`}>
           <img
             className="place-card__image"
             src={roomCard.previewImage}
@@ -54,8 +52,10 @@ function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
+            onClick={() => {
+              changeFavoriteStatus({roomId: roomCard.id, newFavoriteStatus: Number(!roomCard.isFavorite)});}}
             className={`place-card__bookmark-button ${
-              roomCard.isFavorite ? 'place-card__bookmark-button--active' : ''
+              roomCard.isFavorite && 'place-card__bookmark-button--active'
             }  button`}
             type="button"
           >
@@ -72,7 +72,7 @@ function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${roomCard.id}`}>{roomCard.title}</Link>
+          <Link to={`${APIRoute.Offer}/${roomCard.id}`}>{roomCard.title}</Link>
         </h2>
         <p className="place-card__type">{roomCard.type}</p>
       </div>
@@ -80,4 +80,4 @@ function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.
   );
 }
 
-export default RoomCard;
+export default memo(RoomCard);

@@ -1,3 +1,4 @@
+import { FavoriteRoom } from './../types/favorite-status.model';
 import { Review, NewReview } from './../types/reviews.model';
 import { RoomDescription } from './../types/room-card.model';
 import { errorHandler } from './../services/error-hadler';
@@ -10,6 +11,7 @@ import { createAction, createAsyncThunk, createSlice, PayloadAction } from '@red
 import { AppRoute, APIRoute, AuthorizationStatus } from '../const';
 import { InitialState } from '../types/state.model';
 import { api, store } from './store';
+import { updateRoomsArray } from '../util';
 
 const initialCity = 'Amsterdam';
 
@@ -19,8 +21,6 @@ const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
   favoriteRooms: [],
-  // userEmail: '',
-  // userAvatarUrl: '',
   currentRoom: null,
   nearbyRooms: [],
   reviews: []
@@ -37,9 +37,27 @@ export const setListRoomAction = createAsyncThunk(
 export const setFavoriteRoomsAction = createAsyncThunk(
   'setFavoriteRooms',
   async () => {
-    const {data} = await api.get<RoomDescription[]>(APIRoute.Favorite);
-    store.dispatch(loadFavoriteRooms(data));
-  },
+    try {
+      const {data} = await api.get<RoomDescription[]>(APIRoute.Favorite);
+      store.dispatch(loadFavoriteRooms(data));
+    } catch (error) {
+      errorHandler(error);
+    }
+  }
+);
+
+export const changeFavoriteRoomAction = createAsyncThunk(
+  'changeFavoriteRoom',
+  async ({roomId, newFavoriteStatus}: FavoriteRoom) => {
+    try {
+      const {data} = await api.post<RoomDescription>
+      (`${APIRoute.Favorite}/${roomId}/${newFavoriteStatus}`);
+      store.dispatch(updateRooms(data));
+      store.dispatch(loadCurrentRoom(data));
+    } catch (error) {
+      errorHandler(error);
+    }
+  }
 );
 
 export const loginAction = createAsyncThunk(
@@ -152,19 +170,29 @@ const citiesSlice = createSlice({
       state.favoriteRooms = action.payload;},
     loadAuthorizationStatus: (state, action: PayloadAction<AuthorizationStatus>) => {
       state.authorizationStatus = action.payload;},
-    // setUserAvatarUrl: (state, action: PayloadAction<string>) => {
-    //   state.userAvatarUrl = action.payload;},
-    // setUserEmail: (state, action: PayloadAction<string>) => {
-    //   state.userEmail = action.payload;}
     loadCurrentRoom: (state, action: PayloadAction<RoomDescription>) => {
       state.currentRoom = action.payload;},
     loadNearbyRooms: (state, action: PayloadAction<RoomDescription[]>) => {
       state.nearbyRooms = action.payload;},
     loadReviews: (state, action: PayloadAction<Review[]>) => {
       state.reviews = action.payload;},
+    updateRooms: (state, action: PayloadAction<RoomDescription>) => {
+      const nearbyRoomIndex = state.nearbyRooms.findIndex((room: RoomDescription) => room.id === action.payload.id);
+
+      if (nearbyRoomIndex >= 0) {
+        state.nearbyRooms = updateRoomsArray(state.nearbyRooms, action.payload, nearbyRoomIndex);
+      }
+
+      if (!action.payload.isFavorite) {
+        state.favoriteRooms = state.favoriteRooms.filter((room) => room.id !== action.payload.id);
+      }
+
+      const roomIndex = state.roomList.findIndex((room: RoomDescription) => room.id === action.payload.id);
+      state.roomList = updateRoomsArray(state.roomList, action.payload, roomIndex);
+    }
   }
 });
 
 export const { changeCity, loadListRooms, loadFavoriteRooms,
-  loadAuthorizationStatus,loadCurrentRoom, loadNearbyRooms, loadReviews } = citiesSlice.actions;
+  loadAuthorizationStatus,loadCurrentRoom, loadNearbyRooms, loadReviews, updateRooms } = citiesSlice.actions;
 export default citiesSlice.reducer;

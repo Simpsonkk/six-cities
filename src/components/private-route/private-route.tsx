@@ -8,9 +8,6 @@ type PrivatRouteProps = {
 
 function PrivatRoute({children, authorizationStatus}: PrivatRouteProps): JSX.Element {
 
-  // eslint-disable-next-line no-console
-  console.log(authorizationStatus);
-
   return (
     authorizationStatus === AuthorizationStatus.Auth
       ? children

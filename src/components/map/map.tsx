@@ -2,16 +2,16 @@ import { useEffect, useRef } from 'react';
 import leaflet, { LayerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
-import classNames from 'classnames';
-import { Location, Point } from '../../types/room-card.model';
-import { UrlMarker } from '../../const';
+import { Location, RoomDescription } from '../../types/room-card.model';
+import { MapClasses, UrlMarker } from '../../const';
 
 type MapProps = {
-  containerClassName: 'cities__map' | 'property__map',
-  points: Point[],
+  mapClassName: MapClasses,
+  roomList: RoomDescription[],
   activePointId: number,
   selectedCity: Location,
-  onMarkerClick: (id: number) => void
+  onMarkerClick: (id: number) => void,
+  mapStyle?: {width: string, margin: string}
 };
 
 const defaultCustomIcon = leaflet.icon({
@@ -28,40 +28,29 @@ const currentCustomIcon = leaflet.icon({
 
 const markersGroup: LayerGroup = leaflet.layerGroup([]);
 
-function Map({ containerClassName, selectedCity, activePointId, points, onMarkerClick }: MapProps): JSX.Element {
-
-  // const roomList = useAppSelector((state) => state.cities.rooms);
-
-  // // const selectedCity = roomList[0].city.location;
-  // // console.log(selectedCity);
-
-  // const points = roomList.map((room) => ({
-  //   latitude: room.location.latitude,
-  //   longitude: room.location.longitude,
-  //   id: room.id,
-  // }));
-  // console.log(points);
-
+function Map({ mapClassName, selectedCity, activePointId, roomList, onMarkerClick, mapStyle }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, selectedCity);
-  const mapClassName = classNames({
-    [containerClassName]: true,
-    'map': true,
-  });
 
   useEffect(() => {
     if (map) {
+      const points = roomList.map((room) => ({
+        latitude: room.location.latitude,
+        longitude: room.location.longitude,
+        id: room.id,
+      }));
+
       const markers: Marker[] = [];
 
       markersGroup?.clearLayers();
 
-      points.forEach((location, i) => {
+      points.forEach((point, i) => {
         markers.push(new Marker({
-          lat: location.latitude,
-          lng: location.longitude,
-        }).on('click', () => onMarkerClick(location.id)));
+          lat: point.latitude,
+          lng: point.longitude,
+        }).on('click', () => onMarkerClick(point.id)));
 
-        markers[i].setIcon(location.id === activePointId ? currentCustomIcon : defaultCustomIcon);
+        markers[i].setIcon(point.id === activePointId ? currentCustomIcon : defaultCustomIcon);
         markersGroup.addLayer(markers[i]);
       });
 
@@ -71,9 +60,9 @@ function Map({ containerClassName, selectedCity, activePointId, points, onMarker
     return () => {
       markersGroup.remove();
     };
-  }, [map, points, activePointId, onMarkerClick]);
+  }, [map, roomList, activePointId, onMarkerClick]);
 
-  return <section className={mapClassName} style={{height: '100%'}} ref={mapRef}></section>;
+  return <section className={`${mapClassName} map`} style={mapStyle} ref={mapRef}></section>;
 }
 
 export default Map;

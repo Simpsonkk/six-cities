@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { useAppDispatch } from '../../hooks/dispatch-selector';
+import { useAppDispatch } from '../../hooks/useDispatch-useSelector';
 import { loginAction } from '../../store/citiesSlice';
 
 function SignIn(): JSX.Element {

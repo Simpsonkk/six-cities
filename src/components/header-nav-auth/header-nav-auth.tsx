@@ -3,7 +3,7 @@ import {AppRoute} from '../../const';
 import {getUserEmail} from '../../services/user-email';
 import {getUserAvatarUrl} from '../../services/user-avatar-url';
 import {logoutAction} from '../../store/citiesSlice';
-import {useAppDispatch} from '../../hooks/dispatch-selector';
+import {useAppDispatch} from '../../hooks/useDispatch-useSelector';
 
 function HeaderNavAuth(): JSX.Element {
 

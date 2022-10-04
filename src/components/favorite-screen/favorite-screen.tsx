@@ -1,48 +1,48 @@
-// import { RoomDescription, RoomsDescription } from '../../types/room-card.model';
 import Header from '../header/header';
-// import FavoriteCities from './../favorite-cities/favorite-cities';
-// import FavoriteRoomCard from './../favorite-room-card/favorite-room-card';
 import { Link } from 'react-router-dom';
-
-// type FavoriteScreenProps = {
-//   // roomList: RoomsDescription
-// }
+import { AppRoute } from '../../const';
+import FavoriteCardList from '../favorite-card-list/favorite-card-list';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch-useSelector';
+import { setFavoriteRoomsAction } from '../../store/citiesSlice';
+import { RoomDescription } from '../../types/room-card.model';
+import FavoritesEmpty from '../favorites-empty/favorites-empty';
 
 function FavoriteScreen(): JSX.Element {
-  // const favoriteRooms: RoomsDescription = roomList.filter((room: RoomDescription) =>
-  //   room.isFavorite
-  // );
-  // const uniqueCities = Array.from(
-  //   new Set(favoriteRooms.map((room: RoomDescription) => room.city.name))
-  // );
+  const dispatch = useAppDispatch();
 
-  // function getFavoriteRooms(): any { // исправить тип функции, когда доделаешь тело ф
-  //   return uniqueCities.map((city) => (
-  //     <FavoriteCities key={city} city={city}>
-  //       <>
-  //         {favoriteRooms.filter((favoriteRoom: RoomDescription) => (
-  //           favoriteRoom.city.name === city)).map((favoriteRoom: RoomDescription) => (
-  //           <FavoriteRoomCard key={favoriteRoom.id} favoriteRoom={favoriteRoom}/>
-  //         ))}
-  //       </>
-  //     </FavoriteCities>
-  //   ));
-  // }
+  useEffect(() => {
+    dispatch(setFavoriteRoomsAction());
+  }, [dispatch]);
+
+  const { favoriteRooms } = useAppSelector((state) => state);
+
+  const uniqueCities = Array.from(
+    new Set(favoriteRooms.map((room: RoomDescription) => room.city.name))
+  );
 
   return (
     <div className="page">
-      <Header/>
+      <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
+              {favoriteRooms.length > 0 ? (
+                <FavoriteCardList
+                  uniqueCities={uniqueCities}
+                  favoriteRooms={favoriteRooms}
+                />
+              ) : (
+                <FavoritesEmpty />
+              )}
             </ul>
           </section>
         </div>
       </main>
       <footer className="footer container">
-        <Link className="footer__logo-link" to={'/'}>
+        <Link className="footer__logo-link" to={AppRoute.Main}>
           <img
             className="footer__logo"
             src="img/logo.svg"

@@ -1,5 +1,5 @@
 import { SORTING_OPTIONS } from './../../const';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 type SortingRoomListProps = {
   currentSortingOption: string,
@@ -50,4 +50,4 @@ function SortingRoomList({currentSortingOption, onOptionChange}: SortingRoomList
   );
 }
 
-export default SortingRoomList;
+export default memo(SortingRoomList);

@@ -9,8 +9,6 @@ export type InitialState = {
   roomList: RoomDescription[],
   isDataLoaded: boolean,
   favoriteRooms: RoomDescription[],
-  // userEmail: string,
-  // userAvatarUrl: string,
   currentRoom: null | RoomDescription
   nearbyRooms: RoomDescription[],
   reviews: Review[]

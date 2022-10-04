@@ -1,4 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { AppRoute } from '../../const';
 import MainScreen from '../main-screen/main-screen';
 import SignIn from '../sign-in/sign-in';
@@ -6,14 +8,15 @@ import NotFoundScreen from './../not-found-screen/not-found-screen';
 import PrivatRoute from './../private-route/private-route';
 import RoomDetails from './../room-details/room-details';
 import FavoriteScreen from '../favorite-screen/favorite-screen';
-import { useAppSelector } from '../../hooks/dispatch-selector';
-import { useEffect } from 'react';
-import { useAppDispatch } from './../../hooks/dispatch-selector';
-import { checkAuthStatusAction, setListRoomAction } from './../../store/citiesSlice';
+import { useAppSelector } from '../../hooks/useDispatch-useSelector';
+import { useAppDispatch } from '../../hooks/useDispatch-useSelector';
+import {
+  checkAuthStatusAction,
+  setListRoomAction,
+} from './../../store/citiesSlice';
 import Loader from './../loader/loader';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
-import { ToastContainer } from 'react-toastify';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -22,12 +25,13 @@ function App(): JSX.Element {
     dispatch(setListRoomAction());
   }, [dispatch]);
 
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(checkAuthStatusAction());
   }, [dispatch]);
 
-
-  const { isDataLoaded, authorizationStatus } = useAppSelector((state) => state);
+  const { isDataLoaded, authorizationStatus } = useAppSelector(
+    (state) => state
+  );
   if (!isDataLoaded) {
     return <Loader />;
   }
@@ -38,10 +42,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path={AppRoute.Main} element={<MainScreen />} />
         <Route path={AppRoute.SignIn} element={<SignIn />} />
-        <Route
-          path={AppRoute.Room}
-          element={<RoomDetails />}
-        />
+        <Route path={AppRoute.Room} element={<RoomDetails />} />
         <Route
           path={AppRoute.Favorites}
           element={
@@ -50,7 +51,7 @@ function App(): JSX.Element {
             </PrivatRoute>
           }
         />
-        <Route path='*' element={<NotFoundScreen />}></Route>
+        <Route path="*" element={<NotFoundScreen />}></Route>
       </Routes>
     </HistoryRouter>
   );

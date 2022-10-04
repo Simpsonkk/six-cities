@@ -1,16 +1,29 @@
 import { RoomDescription } from '../../types/room-card.model';
 import { countPercentRating } from './../../util';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/useDispatch-useSelector';
+import { changeFavoriteRoomAction } from '../../store/citiesSlice';
+import { FavoriteRoom } from '../../types/favorite-status.model';
+import { APIRoute } from '../../const';
 
 type FavoriteRoomCardProps = {
   favoriteRoom: RoomDescription
 }
 
 function FavoriteRoomCard({ favoriteRoom }: FavoriteRoomCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const changeFavoriteStatus = ({roomId, newFavoriteStatus}: FavoriteRoom) => {
+    dispatch(changeFavoriteRoomAction({
+      roomId,
+      newFavoriteStatus
+    }));
+  };
+
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${favoriteRoom.id}`}>
+        <Link to={`${APIRoute.Offer}/${favoriteRoom.id}`}>
           <img
             className="place-card__image"
             src={favoriteRoom.previewImage}
@@ -29,6 +42,7 @@ function FavoriteRoomCard({ favoriteRoom }: FavoriteRoomCardProps): JSX.Element 
             </span>
           </div>
           <button
+            onClick={() => changeFavoriteStatus({roomId: favoriteRoom.id, newFavoriteStatus: Number(!favoriteRoom.isFavorite)})}
             className="place-card__bookmark-button place-card__bookmark-button--active button"
             type="button"
           >
@@ -49,7 +63,9 @@ function FavoriteRoomCard({ favoriteRoom }: FavoriteRoomCardProps): JSX.Element 
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${favoriteRoom.id}`}>{favoriteRoom.title}</Link>
+          <Link to={`${APIRoute.Offer}/${favoriteRoom.id}`}>
+            {favoriteRoom.title}
+          </Link>
         </h2>
         <p className="place-card__type">{favoriteRoom.type}</p>
       </div>

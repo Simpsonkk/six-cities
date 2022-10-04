@@ -1,7 +1,7 @@
 import { CITIES } from '../../const';
-import { useAppSelector } from '../../hooks/dispatch-selector';
+import { useAppSelector } from '../../hooks/useDispatch-useSelector';
 import { changeCity } from '../../store/citiesSlice';
-import { useAppDispatch } from './../../hooks/dispatch-selector';
+import { useAppDispatch } from '../../hooks/useDispatch-useSelector';
 
 function CitiesList(): JSX.Element {
 

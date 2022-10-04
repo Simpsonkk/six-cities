@@ -12,13 +12,19 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   NearbyRooms = '/nearby',
-  Reviews = '/comments'
+  Reviews = '/comments',
+  Offer = '/offer'
 }
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
+}
+
+export enum MapClasses {
+  MainPage = 'cities__map',
+  PropertyPage = 'property__map'
 }
 
 export enum UrlMarker {

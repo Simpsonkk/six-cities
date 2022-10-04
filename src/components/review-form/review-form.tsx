@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { REVIEW_TITLES } from '../../const';
-import { useAppDispatch } from '../../hooks/dispatch-selector';
+import { useAppDispatch } from '../../hooks/useDispatch-useSelector';
 import { addReviewAction } from '../../store/citiesSlice';
 
 function ReviewForm(): JSX.Element {

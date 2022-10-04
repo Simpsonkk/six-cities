@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks/dispatch-selector';
+import { useAppSelector } from '../../hooks/useDispatch-useSelector';
 import HeaderNavAuth from '../header-nav-auth/header-nav-auth';
 import HeaderNavNoAuth from '../header-nav-no-auth/header-nav-no-auth';
 
