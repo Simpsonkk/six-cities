@@ -1,0 +1,14 @@
+[33m93f8347[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{0}: reset: moving to 93f83473914968362d892e5527aea94c46b9ec5b
+[33m93f8347[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{1}: reset: moving to 93f83473914968362d892e5527aea94c46b9ec5b
+[33m9945c1d[m HEAD@{2}: commit: change util js to util ts
+[33m93f8347[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{3}: commit: add review-form
+[33m0c89160[m HEAD@{4}: commit: add naerby Rooms
+[33m18ff359[m HEAD@{5}: commit: add authorization
+[33m1139110[m HEAD@{6}: commit: add data from server
+[33m0dfeeb0[m HEAD@{7}: commit: add sorting rooms
+[33m364325c[m HEAD@{8}: commit: add redux for roomList
+[33mfbc027b[m HEAD@{9}: commit: add map
+[33m6143124[m HEAD@{10}: commit: add reviews
+[33m2433f9a[m HEAD@{11}: commit: use mocks
+[33m290c120[m HEAD@{12}: commit: add components
+[33m8022754[m HEAD@{13}: commit (initial): Initialize project using Create React App
