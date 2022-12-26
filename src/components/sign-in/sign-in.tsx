@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { useAppDispatch } from '../../hooks/useDispatch-useSelector';
-import { loginAction } from '../../store/citiesSlice';
+import { AppRoute } from '../../consts';
+import { useAppDispatch } from '../../hooks';
+import { loginAction } from '../../store/actions/api-actions';
 
 function SignIn(): JSX.Element {
   const [userAccountData, setUserAccountData] = useState({
     login: '',
-    password: ''
+    password: '',
   });
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -43,15 +43,17 @@ function SignIn(): JSX.Element {
             <h1 className="login__title">Sign in</h1>
             <form
               onSubmit={handleSubmit}
-              className="login__form form" action="#" method="post"
+              className="login__form form"
+              action="#"
+              method="post"
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
-                  onChange={({target}: ChangeEvent<HTMLInputElement>) => {
+                  onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
                     setUserAccountData({
                       ...userAccountData,
-                      login: target.value
+                      login: target.value,
                     });
                   }}
                   className="login__input form__input"
@@ -65,12 +67,13 @@ function SignIn(): JSX.Element {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
-                  onChange={({target}: ChangeEvent<HTMLInputElement>) => {
+                  onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
                     setUserAccountData({
                       ...userAccountData,
-                      password: target.value
+                      password: target.value,
                     });
-                  }} className="login__input form__input"
+                  }}
+                  className="login__input form__input"
                   type="password"
                   name="password"
                   value={userAccountData.password}

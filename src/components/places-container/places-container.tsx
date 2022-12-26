@@ -1,39 +1,41 @@
 import { useCallback, useState } from 'react';
 import browserHistory from '../../browser-history';
-import { APIRoute, MapClasses } from '../../const';
-import { useAppSelector } from '../../hooks/useDispatch-useSelector';
+import { APIRoute, MapClasses } from '../../consts';
+import { useAppSelector } from '../../hooks';
+import { getCity } from '../../store/slices/cities/selector';
+import { getRoomList } from '../../store/slices/room-data/selectors';
 import { filterRoomList } from '../../util';
 import Map from '../map/map';
 import RoomList from '../room-list/room-list';
 import SortingRoomList from '../sorting-room-list/sorting-room-list';
 
-
 function PlacesContainer(): JSX.Element {
-
   const [selectedRoom, setSelectedRoom] = useState(0);
 
-  const { currrentCity, roomList } = useAppSelector((state) => state);
+  const currentCity = useAppSelector(getCity);
+  const roomList = useAppSelector(getRoomList);
 
-  const filteredRoomList = filterRoomList(currrentCity, roomList);
+  const filteredRoomList = filterRoomList(currentCity, roomList);
 
   const selectedCityLocation = filteredRoomList[0].city.location;
 
   const [currentSortingOption, setCurrentSortingOption] = useState('Popular');
 
-  const handleSortingOptionChoose = useCallback((option: string) =>
-    setCurrentSortingOption(option), []);
+  const handleSortingOptionChoose = useCallback(
+    (option: string) => setCurrentSortingOption(option),
+    []
+  );
 
   const handlePlaceHover = useCallback((id: number) => setSelectedRoom(id), []);
 
   const handlePlaceLeave = useCallback(() => setSelectedRoom(0), []);
-
 
   return (
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">
-          {filteredRoomList.length} places to stay in {currrentCity}
+          {filteredRoomList.length} places to stay in {currentCity}
         </b>
         <SortingRoomList
           currentSortingOption={currentSortingOption}

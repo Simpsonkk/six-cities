@@ -1,14 +1,13 @@
 import request from 'axios';
-import { HttpCode } from '../const';
-import {toast} from 'react-toastify';
+import { HttpCode } from '../consts';
+import { toast } from 'react-toastify';
 
 export const errorHandler = (error: unknown): void => {
-
   if (!request.isAxiosError(error)) {
     throw error;
   }
 
-  const {response} = error;
+  const { response } = error;
 
   if (response) {
     switch (response.status) {

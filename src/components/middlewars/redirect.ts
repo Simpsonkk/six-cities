@@ -1,15 +1,14 @@
+import { rootReducer } from '../../store/root-reducer';
 import { Middleware } from 'redux';
-import citiesSlice from '../../store/citiesSlice';
 import browserHistory from '../../browser-history';
 
-type Reducer = ReturnType<typeof citiesSlice>;
+type Reducer = ReturnType<typeof rootReducer>;
 
 export const redirect: Middleware<unknown, Reducer> =
-(_store) => (next) => (action) => {
+  (_store) => (next) => (action) => {
+    if (action.type === 'redirectToRoute') {
+      browserHistory.push(action.payload);
+    }
 
-  if (action.type === 'redirectToRoute') {
-    browserHistory.push(action.payload);
-  }
-
-  return next(action);
-};
+    return next(action);
+  };

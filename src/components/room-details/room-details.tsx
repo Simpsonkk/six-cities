@@ -1,28 +1,36 @@
 import { useParams } from 'react-router-dom';
 import Header from '../header/header';
 import { countPercentRating } from '../../util';
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch-useSelector';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
+import NearPlacesList from '../near-places-list/near-places-list';
+import Reviews from '../reviews/reviews';
+import Map from '../map/map';
+import { APIRoute, MapClasses } from '../../consts';
+import browserHistory from '../../browser-history';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { FavoriteRoom } from '../../types/favorite-status.model';
 import {
   changeFavoriteRoomAction,
   setCurrentRoomAction,
   setNearbyRoomsAction,
   setReviewsAction,
-} from '../../store/citiesSlice';
-import NearPlacesList from '../near-places-list/near-places-list';
-import Reviews from '../reviews/reviews';
-import Map from '../map/map';
-import { APIRoute, MapClasses } from '../../const';
-import browserHistory from '../../browser-history';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { FavoriteRoom } from '../../types/favorite-status.model';
+} from '../../store/actions/api-actions';
+import {
+  getCurrentRoom,
+  getNearbyRooms,
+  getReviews,
+} from '../../store/slices/room-data/selectors';
+import { getAuthStatus } from '../../store/slices/user-process/selector';
 
 function RoomDetails(): JSX.Element {
   const params = useParams();
   const dispatch = useAppDispatch();
 
-  const { currentRoom, nearbyRooms, reviews, authorizationStatus } =
-  useAppSelector((state) => state);
+  const currentRoom = useAppSelector(getCurrentRoom);
+  const nearbyRooms = useAppSelector(getNearbyRooms);
+  const reviews = useAppSelector(getReviews);
+  const authorizationStatus = useAppSelector(getAuthStatus);
 
   useEffect(() => {
     dispatch(setCurrentRoomAction(params.id));

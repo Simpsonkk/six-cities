@@ -1,26 +1,35 @@
 import { RoomDescription } from '../../types/room-card.model';
 import { countPercentRating } from './../../util';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/useDispatch-useSelector';
-import { changeFavoriteRoomAction } from '../../store/citiesSlice';
+import { useAppDispatch } from '../../hooks';
 import { FavoriteRoom } from '../../types/favorite-status.model';
-import { APIRoute } from '../../const';
+import { APIRoute } from '../../consts';
 import { memo } from 'react';
+import { changeFavoriteRoomAction } from '../../store/actions/api-actions';
 
 type RoomCardProps = {
-  roomCard: RoomDescription,
-  onPlaceHover: (id: number) => void,
-  onPlaceLeave: () => void,
+  roomCard: RoomDescription;
+  onPlaceHover: (id: number) => void;
+  onPlaceLeave: () => void;
 };
 
-function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.Element {
+function RoomCard({
+  roomCard,
+  onPlaceHover,
+  onPlaceLeave,
+}: RoomCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const changeFavoriteStatus = ({roomId, newFavoriteStatus}: FavoriteRoom) => {
-    dispatch(changeFavoriteRoomAction({
-      roomId,
-      newFavoriteStatus
-    }));
+  const changeFavoriteStatus = ({
+    roomId,
+    newFavoriteStatus,
+  }: FavoriteRoom) => {
+    dispatch(
+      changeFavoriteRoomAction({
+        roomId,
+        newFavoriteStatus,
+      })
+    );
   };
 
   return (
@@ -53,7 +62,11 @@ function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.
           </div>
           <button
             onClick={() => {
-              changeFavoriteStatus({roomId: roomCard.id, newFavoriteStatus: Number(!roomCard.isFavorite)});}}
+              changeFavoriteStatus({
+                roomId: roomCard.id,
+                newFavoriteStatus: Number(!roomCard.isFavorite),
+              });
+            }}
             className={`place-card__bookmark-button ${
               roomCard.isFavorite && 'place-card__bookmark-button--active'
             }  button`}
@@ -67,7 +80,10 @@ function RoomCard({ roomCard, onPlaceHover, onPlaceLeave }: RoomCardProps): JSX.
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${countPercentRating(roomCard.rating)}%` }}></span>
+            <span
+              style={{ width: `${countPercentRating(roomCard.rating)}%` }}
+            >
+            </span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

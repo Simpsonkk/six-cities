@@ -1,12 +1,13 @@
 import Header from '../header/header';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute } from '../../consts';
 import FavoriteCardList from '../favorite-card-list/favorite-card-list';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/useDispatch-useSelector';
-import { setFavoriteRoomsAction } from '../../store/citiesSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { RoomDescription } from '../../types/room-card.model';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
+import { getFavoriteRooms } from '../../store/slices/room-data/selectors';
+import { setFavoriteRoomsAction } from '../../store/actions/api-actions';
 
 function FavoriteScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ function FavoriteScreen(): JSX.Element {
     dispatch(setFavoriteRoomsAction());
   }, [dispatch]);
 
-  const { favoriteRooms } = useAppSelector((state) => state);
+  const favoriteRooms = useAppSelector(getFavoriteRooms);
 
   const uniqueCities = Array.from(
     new Set(favoriteRooms.map((room: RoomDescription) => room.city.name))

@@ -1,22 +1,24 @@
 import { Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { AppRoute } from '../../const';
+import { AppRoute } from '../../consts';
 import MainScreen from '../main-screen/main-screen';
 import SignIn from '../sign-in/sign-in';
 import NotFoundScreen from './../not-found-screen/not-found-screen';
 import PrivatRoute from './../private-route/private-route';
 import RoomDetails from './../room-details/room-details';
 import FavoriteScreen from '../favorite-screen/favorite-screen';
-import { useAppSelector } from '../../hooks/useDispatch-useSelector';
-import { useAppDispatch } from '../../hooks/useDispatch-useSelector';
-import {
-  checkAuthStatusAction,
-  setListRoomAction,
-} from './../../store/citiesSlice';
+import { useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import Loader from './../loader/loader';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
+import {
+  checkAuthStatusAction,
+  setListRoomAction,
+} from '../../store/actions/api-actions';
+import { getLoadedDataStatus } from '../../store/slices/room-data/selectors';
+import { getAuthStatus } from '../../store/slices/user-process/selector';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -29,9 +31,10 @@ function App(): JSX.Element {
     dispatch(checkAuthStatusAction());
   }, [dispatch]);
 
-  const { isDataLoaded, authorizationStatus } = useAppSelector(
-    (state) => state
-  );
+  const isDataLoaded = useAppSelector(getLoadedDataStatus);
+
+  const authStatus = useAppSelector(getAuthStatus);
+
   if (!isDataLoaded) {
     return <Loader />;
   }
@@ -46,7 +49,7 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivatRoute authorizationStatus={authorizationStatus}>
+            <PrivatRoute authStatus={authStatus}>
               <FavoriteScreen />
             </PrivatRoute>
           }

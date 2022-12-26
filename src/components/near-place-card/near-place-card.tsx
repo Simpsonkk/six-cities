@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { APIRoute } from '../../const';
-import { useAppDispatch } from '../../hooks/useDispatch-useSelector';
-import { changeFavoriteRoomAction } from '../../store/citiesSlice';
+import { APIRoute } from '../../consts';
+import { useAppDispatch } from '../../hooks';
+import { changeFavoriteRoomAction } from '../../store/actions/api-actions';
 import { FavoriteRoom } from '../../types/favorite-status.model';
 import { RoomDescription } from '../../types/room-card.model';
 import { countPercentRating } from '../../util';
@@ -13,11 +13,16 @@ type NearPlaceCardProps = {
 function NearPlaceCard({ nearbyRoom }: NearPlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const changeFavoriteStatus = ({roomId, newFavoriteStatus}: FavoriteRoom) => {
-    dispatch(changeFavoriteRoomAction({
-      roomId,
-      newFavoriteStatus
-    }));
+  const changeFavoriteStatus = ({
+    roomId,
+    newFavoriteStatus,
+  }: FavoriteRoom) => {
+    dispatch(
+      changeFavoriteRoomAction({
+        roomId,
+        newFavoriteStatus,
+      })
+    );
   };
 
   return (
@@ -40,7 +45,11 @@ function NearPlaceCard({ nearbyRoom }: NearPlaceCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            onClick={() => changeFavoriteStatus({roomId: nearbyRoom.id, newFavoriteStatus: Number(!nearbyRoom.isFavorite)})}
+            onClick={() =>
+              changeFavoriteStatus({
+                roomId: nearbyRoom.id,
+                newFavoriteStatus: Number(!nearbyRoom.isFavorite),
+              })}
             className={`place-card__bookmark-button ${
               nearbyRoom.isFavorite && 'place-card__bookmark-button--active'
             } button`}

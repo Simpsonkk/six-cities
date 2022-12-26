@@ -1,39 +1,19 @@
-import { AppDispatch } from './../types/state.model';
+import { UserData } from './../../types/user-data.model';
+import { AuthData } from './../../types/auth-data.model';
+import { FavoriteRoom } from './../../types/favorite-status.model';
+import { errorHandler } from './../../services/error-hadler';
+import { APIRoute, AppRoute, AuthorizationStatus } from './../../consts';
+import { RoomDescription } from './../../types/room-card.model';
+import { AppDispatch } from './../../types/state.model';
 import { AxiosInstance } from 'axios';
-import { FavoriteRoom } from './../types/favorite-status.model';
-import { Review, NewReview } from './../types/reviews.model';
-import { RoomDescription } from './../types/room-card.model';
-import { errorHandler } from './../services/error-hadler';
-import {
-  saveUserAvatarUrl,
-  removeUserAvatarUrl,
-} from './../services/user-avatar-url';
-import { saveUserEmail, removeUserEmail } from './../services/user-email';
-import { saveToken, removeToken } from './../services/token';
-import { UserData } from './../types/user-data.model';
-import { AuthData } from '../types/auth-data.model';
-import {
-  createAction,
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
-import { AppRoute, APIRoute, AuthorizationStatus } from '../const';
-import { InitialState } from '../types/state.model';
-import { updateRoomsArray } from '../util';
-
-const initialCity = 'Amsterdam';
-
-const initialState: InitialState = {
-  currrentCity: initialCity,
-  roomList: [],
-  authorizationStatus: AuthorizationStatus.Unknown,
-  isDataLoaded: false,
-  favoriteRooms: [],
-  currentRoom: null,
-  nearbyRooms: [],
-  reviews: [],
-};
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { loadCurrentRoom, loadFavoriteRooms, loadListRooms, loadNearbyRooms, loadReviews, updateRooms } from '../slices/room-data/room-data';
+import { saveToken, removeToken } from '../../services/token';
+import { saveUserAvatarUrl, removeUserAvatarUrl } from '../../services/user-avatar-url';
+import { saveUserEmail, removeUserEmail } from '../../services/user-email';
+import { Review, NewReview } from '../../types/reviews.model';
+import { loadAuthorizationStatus } from '../slices/user-process/user-process';
+import { redirectToRoute } from './action';
 
 export const setListRoomAction = createAsyncThunk<
   void,
@@ -249,79 +229,3 @@ export const addReviewAction = createAsyncThunk<
     errorHandler(error);
   }
 });
-
-export const redirectToRoute = createAction('redirectToRoute', (value) => ({
-  payload: value,
-}));
-
-const citiesSlice = createSlice({
-  name: 'cities',
-  initialState,
-  reducers: {
-    changeCity: (state, action: PayloadAction<string>) => {
-      state.currrentCity = action.payload;
-    },
-    loadListRooms: (state, action: PayloadAction<RoomDescription[]>) => {
-      state.roomList = action.payload;
-      state.isDataLoaded = true;
-    },
-    loadFavoriteRooms: (state, action: PayloadAction<RoomDescription[]>) => {
-      state.favoriteRooms = action.payload;
-    },
-    loadAuthorizationStatus: (
-      state,
-      action: PayloadAction<AuthorizationStatus>
-    ) => {
-      state.authorizationStatus = action.payload;
-    },
-    loadCurrentRoom: (state, action: PayloadAction<RoomDescription>) => {
-      state.currentRoom = action.payload;
-    },
-    loadNearbyRooms: (state, action: PayloadAction<RoomDescription[]>) => {
-      state.nearbyRooms = action.payload;
-    },
-    loadReviews: (state, action: PayloadAction<Review[]>) => {
-      state.reviews = action.payload;
-    },
-    updateRooms: (state, action: PayloadAction<RoomDescription>) => {
-      const nearbyRoomIndex = state.nearbyRooms.findIndex(
-        (room: RoomDescription) => room.id === action.payload.id
-      );
-
-      if (nearbyRoomIndex >= 0) {
-        state.nearbyRooms = updateRoomsArray(
-          state.nearbyRooms,
-          action.payload,
-          nearbyRoomIndex
-        );
-      }
-
-      if (!action.payload.isFavorite) {
-        state.favoriteRooms = state.favoriteRooms.filter(
-          (room) => room.id !== action.payload.id
-        );
-      }
-
-      const roomIndex = state.roomList.findIndex(
-        (room: RoomDescription) => room.id === action.payload.id
-      );
-      state.roomList = updateRoomsArray(
-        state.roomList,
-        action.payload,
-        roomIndex
-      );
-    },
-  },
-});
-
-export const {
-  changeCity,
-  loadListRooms,
-  loadFavoriteRooms,
-  loadAuthorizationStatus,
-  loadCurrentRoom,
-  loadNearbyRooms,
-  loadReviews,
-  updateRooms,
-} = citiesSlice.actions;
-export default citiesSlice.reducer;

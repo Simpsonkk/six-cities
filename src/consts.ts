@@ -38,6 +38,14 @@ export enum HttpCode {
   NotFound = 404,
 }
 
+export enum NameSpace {
+  User = 'userProcess',
+  Data = 'roomData',
+  Cities = 'cities',
+}
+
+export const INITIAL_CITY = 'Amsterdam';
+
 export const REVIEW_TITLES = ['terribly', 'badly', 'not bad', 'good', 'perfect'];
 
 export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];

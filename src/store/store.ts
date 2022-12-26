@@ -1,16 +1,16 @@
+import { rootReducer } from './root-reducer';
 import { configureStore } from '@reduxjs/toolkit';
-import citiesSlice from './citiesSlice';
 import { createAPI } from './../services/api';
-import { redirect } from './../components/middlewars/redirect';
+import { redirect } from '../components/middlewars/redirect';
 
 export const api = createAPI();
 
 export const store = configureStore({
-  reducer: citiesSlice,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
-        extraArgument: {api}
-      }
-    }).concat(redirect)
+        extraArgument: { api },
+      },
+    }).concat(redirect),
 });

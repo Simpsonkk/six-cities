@@ -3,15 +3,15 @@ import leaflet, { LayerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
 import { Location, RoomDescription } from '../../types/room-card.model';
-import { MapClasses, UrlMarker } from '../../const';
+import { MapClasses, UrlMarker } from '../../consts';
 
 type MapProps = {
-  mapClassName: MapClasses,
-  roomList: RoomDescription[],
-  activePointId: number,
-  selectedCity: Location,
-  onMarkerClick: (id: number) => void,
-  mapStyle?: {width: string, margin: string}
+  mapClassName: MapClasses;
+  roomList: RoomDescription[];
+  activePointId: number;
+  selectedCity: Location;
+  onMarkerClick: (id: number) => void;
+  mapStyle?: { width: string; margin: string };
 };
 
 const defaultCustomIcon = leaflet.icon({
@@ -28,7 +28,14 @@ const currentCustomIcon = leaflet.icon({
 
 const markersGroup: LayerGroup = leaflet.layerGroup([]);
 
-function Map({ mapClassName, selectedCity, activePointId, roomList, onMarkerClick, mapStyle }: MapProps): JSX.Element {
+function Map({
+  mapClassName,
+  selectedCity,
+  activePointId,
+  roomList,
+  onMarkerClick,
+  mapStyle,
+}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, selectedCity);
 
@@ -45,24 +52,33 @@ function Map({ mapClassName, selectedCity, activePointId, roomList, onMarkerClic
       markersGroup?.clearLayers();
 
       points.forEach((point, i) => {
-        markers.push(new Marker({
-          lat: point.latitude,
-          lng: point.longitude,
-        }).on('click', () => onMarkerClick(point.id)));
+        markers.push(
+          new Marker({
+            lat: point.latitude,
+            lng: point.longitude,
+          }).on('click', () => onMarkerClick(point.id))
+        );
 
-        markers[i].setIcon(point.id === activePointId ? currentCustomIcon : defaultCustomIcon);
+        markers[i].setIcon(
+          point.id === activePointId ? currentCustomIcon : defaultCustomIcon
+        );
         markersGroup.addLayer(markers[i]);
       });
 
       markersGroup.addTo(map);
-
     }
     return () => {
       markersGroup.remove();
     };
   }, [map, roomList, activePointId, onMarkerClick]);
 
-  return <section className={`${mapClassName} map`} style={mapStyle} ref={mapRef}></section>;
+  return (
+    <section
+      className={`${mapClassName} map`}
+      style={mapStyle}
+      ref={mapRef}
+    ></section>
+  );
 }
 
 export default Map;

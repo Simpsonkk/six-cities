@@ -1,13 +1,15 @@
-import { SORTING_OPTIONS } from './../../const';
+import { SORTING_OPTIONS } from '../../consts';
 import { memo, useState } from 'react';
 
 type SortingRoomListProps = {
-  currentSortingOption: string,
+  currentSortingOption: string;
   onOptionChange: (option: string) => void;
-}
+};
 
-function SortingRoomList({currentSortingOption, onOptionChange}: SortingRoomListProps): JSX.Element {
-
+function SortingRoomList({
+  currentSortingOption,
+  onOptionChange,
+}: SortingRoomListProps): JSX.Element {
   const [sortOptionState, setSortOptionState] = useState(false);
 
   return (
