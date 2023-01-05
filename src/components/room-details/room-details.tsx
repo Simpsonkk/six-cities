@@ -8,7 +8,6 @@ import Reviews from '../reviews/reviews';
 import Map from '../map/map';
 import { APIRoute, MapClasses } from '../../consts';
 import browserHistory from '../../browser-history';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { FavoriteRoom } from '../../types/favorite-status.model';
 import {
   changeFavoriteRoomAction,
@@ -22,6 +21,7 @@ import {
   getReviews,
 } from '../../store/slices/room-data/selectors';
 import { getAuthStatus } from '../../store/slices/user-process/selector';
+import Loader from '../loader/loader';
 
 function RoomDetails(): JSX.Element {
   const params = useParams();
@@ -57,7 +57,7 @@ function RoomDetails(): JSX.Element {
   };
 
   if (!currentRoom) {
-    return <NotFoundScreen />;
+    return <Loader />;
   }
 
   const mapStyle = { width: '1000px', height: '500px', margin: '0 auto 50px' };

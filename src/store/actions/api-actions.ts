@@ -24,8 +24,7 @@ export const setListRoomAction = createAsyncThunk<
     };
     dispatch: AppDispatch;
   }
->('setListRoom', async (_, { extra, dispatch }) => {
-  const { api } = extra;
+>('roomData/setListRoom', async (_, { extra: {api}, dispatch }) => {
   try {
     const { data } = await api.get<RoomDescription[]>(APIRoute.ListRooms);
     dispatch(loadListRooms(data));
@@ -43,8 +42,7 @@ export const setFavoriteRoomsAction = createAsyncThunk<
     };
     dispatch: AppDispatch;
   }
->('setFavoriteRooms', async (_, { extra, dispatch }) => {
-  const { api } = extra;
+>('roomData/setFavoriteRooms', async (_, { extra: {api}, dispatch }) => {
   try {
     const { data } = await api.get<RoomDescription[]>(APIRoute.Favorite);
     dispatch(loadFavoriteRooms(data));
@@ -63,9 +61,8 @@ export const changeFavoriteRoomAction = createAsyncThunk<
     dispatch: AppDispatch;
   }
 >(
-  'changeFavoriteRoom',
-  async ({ roomId, newFavoriteStatus }, { extra, dispatch }) => {
-    const { api } = extra;
+  'roomData/changeFavoriteRoom',
+  async ({ roomId, newFavoriteStatus }, { extra: {api}, dispatch }) => {
     try {
       const { data } = await api.post<RoomDescription>(
         `${APIRoute.Favorite}/${roomId}/${newFavoriteStatus}`
@@ -87,8 +84,7 @@ export const loginAction = createAsyncThunk<
     };
     dispatch: AppDispatch;
   }
->('login', async ({ login: email, password }, { extra, dispatch }) => {
-  const { api } = extra;
+>('userProcess/login', async ({ login: email, password }, { extra: {api}, dispatch }) => {
   try {
     const { data } = await api.post<UserData>(APIRoute.Login, {
       email,
@@ -114,8 +110,7 @@ export const logoutAction = createAsyncThunk<
     };
     dispatch: AppDispatch;
   }
->('logout', async (_, { extra, dispatch }) => {
-  const { api } = extra;
+>('userProcess/logout', async (_, { extra: {api}, dispatch }) => {
   try {
     api.delete(APIRoute.Logout);
     removeToken();
@@ -136,8 +131,7 @@ export const checkAuthStatusAction = createAsyncThunk<
     };
     dispatch: AppDispatch;
   }
->('checkAuthStatus', async (_, { extra, dispatch }) => {
-  const { api } = extra;
+>('userProcess/checkAuthStatus', async (_, { extra: {api}, dispatch }) => {
   try {
     await api.get(APIRoute.Login);
     dispatch(loadAuthorizationStatus(AuthorizationStatus.Auth));
@@ -155,8 +149,7 @@ export const setCurrentRoomAction = createAsyncThunk<
     };
     dispatch: AppDispatch;
   }
->('setCurrentRoom', async (roomId, { extra, dispatch }) => {
-  const { api } = extra;
+>('roomData/setCurrentRoom', async (roomId, { extra: {api}, dispatch }) => {
   try {
     const { data } = await api.get<RoomDescription>(
       `${APIRoute.ListRooms}/${roomId}`
@@ -177,8 +170,7 @@ export const setNearbyRoomsAction = createAsyncThunk<
     };
     dispatch: AppDispatch;
   }
->('setNearbyRooms', async (roomId: string | undefined, { extra, dispatch }) => {
-  const { api } = extra;
+>('roomData/setNearbyRooms', async (roomId: string | undefined, { extra: {api}, dispatch }) => {
   try {
     const { data } = await api.get<RoomDescription[]>(
       `${APIRoute.ListRooms}/${roomId}${APIRoute.NearbyRooms}`
@@ -198,8 +190,7 @@ export const setReviewsAction = createAsyncThunk<
     };
     dispatch: AppDispatch;
   }
->('setReviews', async (roomId: string | undefined, { extra, dispatch }) => {
-  const { api } = extra;
+>('roomData/setReviews', async (roomId: string | undefined, { extra: {api}, dispatch }) => {
   try {
     const { data } = await api.get<Review[]>(`${APIRoute.Reviews}/${roomId}`);
     dispatch(loadReviews(data));
@@ -217,8 +208,7 @@ export const addReviewAction = createAsyncThunk<
     };
     dispatch: AppDispatch;
   }
->('addReview', async ({ comment, rating, roomId }, { extra, dispatch }) => {
-  const { api } = extra;
+>('roomData/addReview', async ({ comment, rating, roomId }, { extra: {api}, dispatch }) => {
   try {
     const { data } = await api.post<Review[]>(`${APIRoute.Reviews}/${roomId}`, {
       comment,
