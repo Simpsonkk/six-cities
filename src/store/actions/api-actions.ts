@@ -112,7 +112,7 @@ export const logoutAction = createAsyncThunk<
   }
 >('userProcess/logout', async (_, { extra: {api}, dispatch }) => {
   try {
-    api.delete(APIRoute.Logout);
+    await api.delete(APIRoute.Logout);
     removeToken();
     removeUserEmail();
     removeUserAvatarUrl();
